@@ -22,20 +22,24 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="PKI简述">
+  <meta name="description" content="PKI实验">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PKI">
-<meta property="og:url" content="http://example.com/2022/07/03/PKI/index.html">
+<meta property="og:title" content="PKI实验步骤">
+<meta property="og:url" content="http://example.com/2022/07/06/PKI%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4/index.html">
 <meta property="og:site_name" content="俾面派对">
-<meta property="og:description" content="PKI简述">
+<meta property="og:description" content="PKI实验">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-07-03T10:05:05.000Z">
-<meta property="article:modified_time" content="2022-07-06T07:58:32.115Z">
+<meta property="og:image" content="http://example.com/images/CA.png">
+<meta property="og:image" content="http://example.com/images/CA1.png">
+<meta property="og:image" content="http://example.com/images/SSL.png">
+<meta property="article:published_time" content="2022-07-06T08:25:48.000Z">
+<meta property="article:modified_time" content="2022-07-09T10:38:57.416Z">
 <meta property="article:author" content="Amain">
 <meta property="article:tag" content="网络">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/CA.png">
 
-<link rel="canonical" href="http://example.com/2022/07/03/PKI/">
+<link rel="canonical" href="http://example.com/2022/07/06/PKI%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4/">
 
 
 <script id="page-configurations">
@@ -48,7 +52,7 @@
   };
 </script>
 
-  <title>PKI | 俾面派对</title>
+  <title>PKI实验步骤 | 俾面派对</title>
   
 
 
@@ -168,7 +172,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/03/PKI/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/06/PKI%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -181,7 +185,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          PKI
+          PKI实验步骤
         </h1>
 
         <div class="post-meta">
@@ -191,14 +195,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-07-03 18:05:05" itemprop="dateCreated datePublished" datetime="2022-07-03T18:05:05+08:00">2022-07-03</time>
+              <time title="创建时间：2022-07-06 16:25:48" itemprop="dateCreated datePublished" datetime="2022-07-06T16:25:48+08:00">2022-07-06</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-07-06 15:58:32" itemprop="dateModified" datetime="2022-07-06T15:58:32+08:00">2022-07-06</time>
+                <time title="修改时间：2022-07-09 18:38:57" itemprop="dateModified" datetime="2022-07-09T18:38:57+08:00">2022-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -210,7 +214,7 @@
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E7%90%86%E8%AE%BA/" itemprop="url" rel="index"><span itemprop="name">理论</span></a>
+                  <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%AE%9E%E6%93%8D/" itemprop="url" rel="index"><span itemprop="name">实操</span></a>
                 </span>
             </span>
 
@@ -220,7 +224,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>547</span>
+              <span>1.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -229,7 +233,7 @@
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
               <span>1 分钟</span>
             </span>
-            <div class="post-description">PKI简述</div>
+            <div class="post-description">PKI实验</div>
 
         </div>
       </header>
@@ -240,82 +244,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="PKI（公钥基础设施）"><a href="#PKI（公钥基础设施）" class="headerlink" title="PKI（公钥基础设施）"></a>PKI（公钥基础设施）</h2><h3 id="1-PKI概述"><a href="#1-PKI概述" class="headerlink" title="1. PKI概述"></a>1. PKI概述</h3><ul>
-<li><pre><code>作用：通过加密技术和数字签名保证信息的安全
+        <h3 id="1、实验准备"><a href="#1、实验准备" class="headerlink" title="1、实验准备"></a>1、实验准备</h3><pre><code>    一台win7虚拟机（IP为10.1.1.1/24），一台win2008系统（IP为10.1.1.2/24）
 </code></pre>
-</li>
-<li><pre><code>组成：公钥加密技术、数字证书、CA、RA
-</code></pre>
-</li>
-</ul>
-<hr>
-<h3 id="2、信息安全三要素"><a href="#2、信息安全三要素" class="headerlink" title="2、信息安全三要素"></a>2、信息安全三要素</h3><ul>
-<li><pre><code>机密性：使用对方的公钥进行加密
-</code></pre>
-</li>
-<li><pre><code>完整性
-</code></pre>
-</li>
-<li><pre><code>身份验证/操作的不可否认性/数字签名：使用自己的私钥
-</code></pre>
-</li>
-</ul>
-<hr>
-<h3 id="3、哪些IT领域用到PKI"><a href="#3、哪些IT领域用到PKI" class="headerlink" title="3、哪些IT领域用到PKI"></a>3、哪些IT领域用到PKI</h3><ul>
-<li><pre><code>SSL/HTTPS   
-</code></pre>
-</li>
-<li><pre><code>IPsecVPN（IPSec协议远程接入VPN）
-</code></pre>
-</li>
-<li><pre><code>部分远程访问VPN
-</code></pre>
-</li>
-</ul>
-<hr>
-<h3 id="4、公钥加密技术"><a href="#4、公钥加密技术" class="headerlink" title="4、公钥加密技术"></a>4、公钥加密技术</h3><ul>
-<li><pre><code>作用：实现对信息加密、数字签名等安全保障  
-</code></pre>
-</li>
-<li><pre><code>加密算法：	
-</code></pre>
-<ol>
-<li>对称加密算法：加密解密秘钥一致  </li>
-<li>非对称加密算法：  <ul>
-<li><p>通信双方各自产生一对公私钥     </p>
-</li>
-<li><p>双方各自交换公钥</p>
-</li>
-<li><p>公私钥为互相加密解密关系</p>
-</li>
-<li><p>公私钥不可逆推</p>
-</li>
-</ul>
-</li>
-</ol>
-</li>
-<li><pre><code>基本模型    	
-</code></pre>
-<ul>
-<li><pre><code> 加密模型：发送方用接收方的公钥进行加密，接收方的私钥作为解密秘钥，私钥只有接收方有，因此只有接收方可以解密数据  
-</code></pre>
-</li>
-<li><pre><code> 认证模型：发送方除了用对方的公钥进行加密，还会用自己的私钥对摘要（使用hash加密对数据进行加密后形成摘要）进行加密，是为数字签名，和加密后的数据一起发过去，只有拥有私钥的发送者才能对数据进行有效的签名，任何人均可用签名人的公钥来检验该签名的有效.
-</code></pre>
-</li>
-</ul>
-</li>
-</ul>
-<p>	</p>
-<hr>
-<h3 id="5、数字证书"><a href="#5、数字证书" class="headerlink" title="5、数字证书"></a>5、数字证书</h3><ul>
-<li><pre><code>作用：保证公钥持有者的合法性，上面包含持有者的身份信息，由权威机构CA颁布。
-</code></pre>
-</li>
-<li><pre><code>使用：CA机构使用自己的私钥对发送者的公钥进行加密，接受者接收到后使用CA的公钥对证书进行解密，验证证书的真实性。
-</code></pre>
-</li>
-</ul>
+<h3 id="2、实验步骤"><a href="#2、实验步骤" class="headerlink" title="2、实验步骤"></a>2、实验步骤</h3><blockquote>
+<p>1、使两台虚拟机可以互相ping通。<br>2、在win2008上安装IIS服务，并建立一个网站，主机名为<a target="_blank" rel="noopener" href="http://www.123.com,之后设置该网站的默认文档./">www.123.com，之后设置该网站的默认文档。</a><br>3、在win2008配置域名解析器DNS，对<a target="_blank" rel="noopener" href="http://www.123.com的域名进行解析/">www.123.com的域名进行解析</a>.<br>4、到这里使用win7访问<a target="_blank" rel="noopener" href="http://www.123.com,确保可以访问./">http://www.123.com，确保可以访问。</a><br>5、在win2008安装CA（颁发证书的机构）组件，在安装过程中记得勾选”整数颁发机构web注册”。<br>6、win2008打开IIS，点击服务器，选择服务器证书，点进去后选择创建证书申请，注意通用名称要写<a target="_blank" rel="noopener" href="http://www.123.com,其余随便写.完成后就会获得一个证书申请文件./">www.123.com，其余随便写。完成后就会获得一个证书申请文件。</a><br>    <img src="/images/CA.png">  <img src="/images/CA1.png"><br>7、向CA申请证书。win2008打开网页<a target="_blank" rel="noopener" href="http://10.1.1.2/certsrv%EF%BC%8C%E9%80%89%E6%8B%A9%E7%94%B3%E8%AF%B7%E8%AF%81%E4%B9%A6%EF%BC%8C%E4%B8%80%E5%AE%9A%E9%80%89%E6%8B%A9%E9%AB%98%E7%BA%A7%E8%AF%81%E4%B9%A6%E7%94%B3%E8%AF%B7%EF%BC%88%E5%9B%A0%E4%B8%BA%E6%98%AF%E7%BB%99%E7%BD%91%E7%AB%99%E7%94%B3%E8%AF%B7%E8%AF%81%E4%B9%A6%EF%BC%89%EF%BC%8C%E5%B9%B6%E5%90%91CA%E5%8F%91%E9%80%81web%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%94%B3%E8%AF%B7%E6%96%87%E4%BB%B6%E3%80%82">http://10.1.1.2/certsrv，选择申请证书，一定选择高级证书申请（因为是给网站申请证书），并向CA发送web服务器申请文件。</a><br>8、win2008打开证书颁发机构，进行颁发证书。<br>9、win2008打开网页<a target="_blank" rel="noopener" href="http://10.1.1.2/certsrv%EF%BC%8C%E8%BF%9B%E8%A1%8C%E4%B8%8B%E8%BD%BD%E8%AF%81%E4%B9%A6%E3%80%82">http://10.1.1.2/certsrv，进行下载证书。</a><br>10、下载证书后，再次回到IIS，点击服务器，选择为服务器证书-&gt;完成证书申请。</p>
+</blockquote>
+<blockquote>
+<p>11、之后点击创建的主机名为<a target="_blank" rel="noopener" href="http://www.123.com的网站,右键编辑绑定,添加一个https开头的./">www.123.com的网站，右键编辑绑定，添加一个https开头的。</a><br>12、添加完成后，点击网站，右边有个SSL设置，勾选要求SSL之后，客户就不许访问<a target="_blank" rel="noopener" href="http://123.com,要求客户以安全方式访问.除此之外,还有个客户机证书的选项,可以选择如果客户机没有证书,是否允许其访问./">http://123.com,要求客户以安全方式访问。除此之外，还有个客户机证书的选项，可以选择如果客户机没有证书，是否允许其访问。</a><br>                                     <img src="/images/SSL.png"><br>13、在win7上可以成功访问<a target="_blank" rel="noopener" href="https://www.123.com/">https://www.123.com</a><br>14、除此之外，由于在win7上并没有信任CA机构，所以每次访问都会有提示，解决办法：在win7上访问<a target="_blank" rel="noopener" href="http://10.1.1.2/certsrv%EF%BC%8C%E9%80%89%E6%8B%A9%E4%B8%8B%E8%BD%BDCA%E8%AF%81%E4%B9%A6%E3%80%82%E4%B8%8B%E8%BD%BD%E5%AE%8C%E8%AF%81%E4%B9%A6%E5%90%8E%EF%BC%8C%E9%80%89%E6%8B%A9%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E5%B7%A5%E5%85%B7-&gt;internet%E9%80%89%E9%A1%B9-&gt;%E5%86%85%E5%AE%B9-&gt;%E8%AF%81%E4%B9%A6-&gt;%E5%8F%97%E4%BF%A1%E4%BB%BB%E7%9A%84%E8%AF%81%E4%B9%A6%E9%A2%81%E5%8F%91%E6%9C%BA%E6%9E%84%EF%BC%8C%E5%AF%BC%E5%85%A5%E5%8D%B3%E5%8F%AF%EF%BC%8C%E8%BF%99%E5%B0%B1%E6%98%AF%E7%94%A8CA%E7%9A%84%E5%85%AC%E9%92%A5%E5%8E%BB%E9%AA%8C%E8%AF%81%E8%AF%81%E4%B9%A6%E7%9A%84%E7%9C%9F%E5%81%87%E3%80%82">http://10.1.1.2/certsrv，选择下载CA证书。下载完证书后，选择浏览器的工具-&gt;internet选项-&gt;内容-&gt;证书-&gt;受信任的证书颁发机构，导入即可，这就是用CA的公钥去验证证书的真假。</a><br>15、客户机申请证书。win7打开网页<a target="_blank" rel="noopener" href="http://10.1.1.2/certsrv%EF%BC%8C%E9%80%89%E6%8B%A9%E7%94%B3%E8%AF%B7%E8%AF%81%E4%B9%A6%EF%BC%8C%E8%BF%99%E6%AC%A1%E9%80%89%E6%8B%A9%E7%94%B3%E8%AF%B7Web%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AF%81%E4%B9%A6%EF%BC%8C%E5%9B%A0%E4%B8%BA%E6%98%AF%E7%BB%99%E8%BF%99%E4%B8%AA%E5%AE%A2%E6%88%B7%E6%9C%BA%E4%B8%8A%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E7%94%B3%E8%AF%B7%E8%AF%81%E4%B9%A6%E3%80%82%E4%B9%8B%E5%90%8E%E5%B0%B1%E5%92%8C%E4%B8%8A%E9%9D%A2%E6%AD%A5%E9%AA%A4%E5%B7%AE%E4%B8%8D%E5%A4%9A%E3%80%82">http://10.1.1.2/certsrv，选择申请证书，这次选择申请Web浏览器证书，因为是给这个客户机上的浏览器申请证书。之后就和上面步骤差不多。</a><br>客户机申请证书的作用：在第12步中，如果网站选择没有证书不给访问的话，客户机就不能访问，申请了证书就可以随便访问了。</p>
+</blockquote>
 
     </div>
 
@@ -333,10 +269,13 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2022/07/04/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" rel="next" title="渗透简单测试流程">
-      渗透简单测试流程 <i class="fa fa-chevron-right"></i>
+    <a href="/2022/07/04/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" rel="prev" title="渗透简单测试流程">
+      <i class="fa fa-chevron-left"></i> 渗透简单测试流程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/06/WebPack/" rel="next" title="WebPack">
+      WebPack <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -401,7 +340,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PKI%EF%BC%88%E5%85%AC%E9%92%A5%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">PKI（公钥基础设施）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-PKI%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">1. PKI概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E4%B8%89%E8%A6%81%E7%B4%A0"><span class="nav-number">1.2.</span> <span class="nav-text">2、信息安全三要素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%93%AA%E4%BA%9BIT%E9%A2%86%E5%9F%9F%E7%94%A8%E5%88%B0PKI"><span class="nav-number">1.3.</span> <span class="nav-text">3、哪些IT领域用到PKI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%85%AC%E9%92%A5%E5%8A%A0%E5%AF%86%E6%8A%80%E6%9C%AF"><span class="nav-number">1.4.</span> <span class="nav-text">4、公钥加密技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6"><span class="nav-number">1.5.</span> <span class="nav-text">5、数字证书</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%AE%9E%E9%AA%8C%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">1、实验准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4"><span class="nav-number">2.</span> <span class="nav-text">2、实验步骤</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

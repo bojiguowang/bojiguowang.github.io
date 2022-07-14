@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Webpack基础笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebPack">
+<meta property="og:url" content="http://example.com/2022/07/06/WebPack/index.html">
+<meta property="og:site_name" content="俾面派对">
+<meta property="og:description" content="Webpack基础笔记">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-06T11:39:10.000Z">
+<meta property="article:modified_time" content="2022-07-07T11:16:12.778Z">
+<meta property="article:author" content="Amain">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/07/06/WebPack/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>WebPack | 俾面派对</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">俾面派对</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/06/WebPack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Amain">
+      <meta itemprop="description" content="生如蝼蚁当立鸿鹄之志，命如纸薄应有不屈之心">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="俾面派对">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          WebPack
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-06 19:39:10" itemprop="dateCreated datePublished" datetime="2022-07-06T19:39:10+08:00">2022-07-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-07 19:16:12" itemprop="dateModified" datetime="2022-07-07T19:16:12+08:00">2022-07-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86/" itemprop="url" rel="index"><span itemprop="name">前端知识</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86/%E7%90%86%E8%AE%BA/" itemprop="url" rel="index"><span itemprop="name">理论</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+            <div class="post-description">Webpack基础笔记</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="开发模式"><a href="#开发模式" class="headerlink" title="开发模式"></a>开发模式</h1><p>1、webpack打包后的文件叫做bundle</p>
+<p>2、script标签引入js代码，需要加属性type&#x3D;”module”，否则浏览器会报错，因为ES6模块化浏览器并不识别，除此之外还可以使用webpack</p>
+<p>3、npm i webpack webpack-cli -D 安装webpack 然后使用webpack打包（没写配置文件的情况下），命令为npx webpack index.js –  &#x3D;development,script引入打包后的js文件就不会报错。</p>
+<p>4、webpack本身功能极少，只能处理js资源，遇到css或者其他资源就会报错。</p>
+<p>5、webpack配置：</p>
+<pre><code>    entry(入口)：知识webpack从哪个文佳开始打包
+    output（输出）：打包后的文件放哪
+    loader（加载器）：webpack本身只能解析js、json资源，其他资源需要借助loader，才能解析
+    plugins（插件）：扩展webpack功能
+    mode（模式）：两种  开发模式：development   生产模式：production
+</code></pre>
+<p><strong>插件在配置的时候都需要引入</strong></p>
+<p>6、webpack配置文件名字一定为：webpack.config.js ，在写了配置文件的情况下，打包命令为npx webpack</p>
+<pre><code>内容格式一般是：
+    const path = require(&quot;path&quot;)
+    module.exports = &#123;
+    // 入口，相对路径
+       entry: &quot;./src/main.js&quot;,//所有文件必须在入口文件中引入
+       // 输出
+    output: &#123;
+    // 文件输出路径，相对路径，__dirname代表当前文件的文件目录
+    path: path.resolve(__dirname, &quot;dist&quot;),
+    // 入口文件打包的文件名字
+    filename: &quot;main.js&quot;
+    &#125;,
+    module: &#123;
+    rules: [
+        // loader的位置
+        ]
+    &#125;,
+    // 插件
+    plugins: &#123;
+
+    &#125;,
+    // 模式
+    mode: &quot;development&quot;
+&#125;
+</code></pre>
+<h2 id="7、处理样式资源"><a href="#7、处理样式资源" class="headerlink" title="7、处理样式资源"></a>7、处理样式资源</h2><h3 id="1、处理CSS资源"><a href="#1、处理CSS资源" class="headerlink" title="1、处理CSS资源"></a>1、处理CSS资源</h3><pre><code>        安装：npm i css-loader style-loader -D
+        代码：
+        // 处理CSS样式资源
+        &#123;
+            // 用来匹配 .css 结尾的文件
+            test: /\.css$/,
+            // use 数组里面 Loader 执行顺序是从下到上
+            use: [
+                &quot;style-loader&quot;, //将js中的CSS文件创建style标签添加到html文件中生效
+                &quot;css-loader&quot;//将CSS资源编译成commonjs的模块到js中
+            ],
+        &#125;,
+</code></pre>
+<h3 id="2、处理less资源"><a href="#2、处理less资源" class="headerlink" title="2、处理less资源"></a>2、处理less资源</h3><pre><code>        安装：npm i less-loader less -D
+        代码：
+        &#123;
+            test: /\.less$/,
+            use: [
+                &quot;style-loader&quot;, 
+                &quot;css-loader&quot;, 
+                &quot;less-loader&quot;//将less编译成css文件
+            ],
+        &#125;,
+</code></pre>
+<h3 id="3、处理Sass资源"><a href="#3、处理Sass资源" class="headerlink" title="3、处理Sass资源"></a>3、处理Sass资源</h3><pre><code>        安装：npm i sass sass-loader -D
+        代码：
+        &#123;
+            test: /\.s[ac]ss$/,
+            use: [
+                &quot;style-loader&quot;, 
+                &quot;css-loader&quot;, 
+                &quot;sass-loader&quot;//将Sass编译成css文件
+            ],
+        &#125;,
+</code></pre>
+<h3 id="4、处理Styl资源"><a href="#4、处理Styl资源" class="headerlink" title="4、处理Styl资源"></a>4、处理Styl资源</h3><pre><code>    安装：npm i stylus-loader -D
+    代码：
+    &#123;
+            test: /\.styl$/,
+            use: [
+                &quot;style-loader&quot;,
+                &quot;css-loader&quot;, 
+                &quot;stylus-loader&quot;//将stylus编译成css文件
+            ],
+        &#125;,
+</code></pre>
+<h2 id="8、处理图片资源（没成功，无论是base64处理，还是打包路径）"><a href="#8、处理图片资源（没成功，无论是base64处理，还是打包路径）" class="headerlink" title="8、处理图片资源（没成功，无论是base64处理，还是打包路径）"></a>8、处理图片资源（没成功，无论是base64处理，还是打包路径）</h2><pre><code>    webpack4处理图片资源使用file-loader和url-loader，在webpack5中这两个loader已经内置到webpack里了，所以不用在下载了，但是我们有时候需要对图片进行优化，对小于100k的图片转换成base64格式，就是一串编码，减少请求数量，但是会增加一点内存（图片越大，增加的内存越多）。
+    不用下载，加入以下代码：
+    // 优化图片资源
+        &#123;
+            test: /\.(png|jpe?g|gif|webp|jpg)$/,
+            type: &quot;asset&quot;,
+            parser: &#123;
+                dataUrlCondition: &#123;
+                    maxSize: 100 * 1024 // 小于10kb的图片会被base64处理
+                &#125;
+            &#125;,
+            //处理图片打包路径
+            generator: &#123;
+                // 将图片文件输出到 static/imgs 目录中
+                // 将图片文件命名 [hash:8][ext][query]
+                // [hash:8]: hash值取前8位
+                // [ext]: 使用之前的文件扩展名
+                // [query]: 添加之前的query参数
+                filename: &quot;static/imgs/[hash:8][ext][query]&quot;,
+              &#125;,
+        &#125;,
+</code></pre>
+<h2 id="9、处理字体图标资源"><a href="#9、处理字体图标资源" class="headerlink" title="9、处理字体图标资源"></a>9、处理字体图标资源</h2><pre><code>    字以图标资源和上面的图片资源一样，只要正常引入图标和样式，显示就没有问题，就是输出路径的问题，和上面的也差不多
+    &#123;
+            test: /\.(ttf|woff2|woff)$/,
+            type: &quot;asset/resource&quot;,
+            generator: &#123;
+                filename: &quot;static/media/[hash:8][ext][query]&quot;,
+              &#125;,
+        &#125;,
+</code></pre>
+<p><strong>这里type如果是asset就是要转化成base64，如果是asset&#x2F;resource就是原封不动的输出。</strong></p>
+<h2 id="10、处理其他资源"><a href="#10、处理其他资源" class="headerlink" title="10、处理其他资源"></a>10、处理其他资源</h2><pre><code>    就在上面处理图标资源的test加上要处理的文件后缀，让其打包到同一文件夹下，即可，没有其他要处理的。
+</code></pre>
+<h2 id="11、处理js资源"><a href="#11、处理js资源" class="headerlink" title="11、处理js资源"></a>11、处理js资源</h2><pre><code>    处理js格式问题，使用eslint，处理js兼容性问题使用babel。
+</code></pre>
+<h3 id="1、ESlint（插件）"><a href="#1、ESlint（插件）" class="headerlink" title="1、ESlint（插件）"></a>1、ESlint（插件）</h3><pre><code>    ESlint最重要的就是配置文件,配置文件有两种方式:
+            在根目录下创建 .eslintrc.js文件，
+            在package.json文件的eslintConfig配置项下进行配置，后面这种方式不需要新建文件.
+    配置文件 .eslintrc.js代码大致结构：
+            module.exports = &#123;
+        	// 解析选项
+        	parserOptions: &#123;
+                ecmaVersion: 6, // ES 语法版本
+                sourceType: &quot;module&quot;, // ES 模块化
+                ecmaFeatures: &#123; // ES 其他特性
+                    jsx: true // 如果是 React 项目，就需要开启 jsx 语法
+                &#125;
+            &#125;,
+            //配置环境问题
+            env: &#123;
+                node: true,//启动node中全局变量
+                browser: true
+            &#125;,
+            // 具体检查规则，&quot;off&quot;或0代表关闭规则,&quot;warn&quot;或1代表警告级别,&quot;error&quot;或2代表错误级别
+            rules: &#123;
+                &quot;no-var&quot;:2,//不能使用var定义变量
+            &#125;,
+            // 继承其他规则
+            extends: [&quot;eslint:recommended&quot;],//eslint:recommended是官方推荐的规则
+            // 其他规则详见：https://eslint.bootcss.com/docs/user-guide/configuring
+        &#125;;
+    在webpack配置文件中进行配置：
+            下载：npm i eslint-webpack-plugin eslint -D
+            配置：注意是在插件地方进行配置 
+        plugins: [
+            new ESLintWebpackPlugin(&#123;
+              // 指定检查文件的根目录
+              context: path.resolve(__dirname, &quot;src&quot;),
+                &#125;),
+            ],
+</code></pre>
+<h3 id="2、babel"><a href="#2、babel" class="headerlink" title="2、babel"></a>2、babel</h3><pre><code>    babel处理兼容性问题
+    下载：npm i babel-loader @babel/core @babel/preset-env -D
+</code></pre>
+<p>根目录新建文件 babel.config.js，内容如下：  </p>
+<pre><code>    module.exports = &#123;
+      // 智能预设，能够编译es6语法为低级的语法
+      presets: [&quot;@babel/preset-env&quot;],
+    &#125;;
+</code></pre>
+<p>webpack.config.js配置，在loader配置项下配置<br>        {<br>        test: &#x2F;.js$&#x2F;,<br>        exclude: &#x2F;node_modules&#x2F;, &#x2F;&#x2F; 排除node_modules代码不编译<br>        loader: “babel-loader”,<br>      },</p>
+<h2 id="12、处理html资源"><a href="#12、处理html资源" class="headerlink" title="12、处理html资源"></a>12、处理html资源</h2><pre><code>    html文件中需要手动引入js文件，安装npm i html-webpack-plugin -D插件并配置插件可以实现自动引入
+</code></pre>
+<h2 id="13、自动化"><a href="#13、自动化" class="headerlink" title="13、自动化"></a>13、自动化</h2><pre><code>    每次更改后都需要重新打包，很麻烦，所以下载npm i webpack-dev-server -D并配置后，打包使用命令 npx webpack serve就会开启一个开发服务器，每次更新保存后都会帮你自动打包
+</code></pre>
+<p><strong>开发服务器不会输出资源，是在内存中编译打包，也就是说就算你把dist目录删了，页面还是有效果的。</strong></p>
+<h1 id="生产模式"><a href="#生产模式" class="headerlink" title="生产模式"></a>生产模式</h1><p>生产模式就是部署上线，新建一个文件夹，用来放开发模式下的webpack配置文件webpack.dev.js和生产模式下的配置文件webpack.prod.js<br>两个配置文件的区别：</p>
+<pre><code>    开发模式不需要输出文件
+    生产模式不需要开发服务器
+    mode模式记得更改
+    两者启动命令不同
+        dev：npx webpack serve --config ./webpack/webpack.dev.js
+        build：npx webpack --config ./webpack/webpack.prod.js
+        可以在package.json中进行配置启动命令
+            // package.json
+                &#123;
+                  &quot;scripts&quot;: &#123;
+                    &quot;start&quot;: &quot;npm run dev&quot;,
+                    &quot;dev&quot;: &quot;npx webpack serve --config ./config/webpack.dev.js&quot;,
+                    &quot;build&quot;: &quot;npx webpack --config ./config/webpack.prod.js&quot;
+                  &#125;
+                &#125;
+        以后启动指令：
+        开发模式：npm start 或 npm run dev
+        生产模式：npm run build
+</code></pre>
+<h2 id="1、CSS处理"><a href="#1、CSS处理" class="headerlink" title="1、CSS处理"></a>1、CSS处理</h2><pre><code>    css 文件目前被打包到 js 文件中，当 js 文件加载时，会创建一个 style 标签来生成样式，会有延迟，造成闪屏，所以我们需要把CSS文件单独打包，并通过link标签加载，性能更好.
+    下载：npm i mini-css-extract-plugin -D
+    安装完成后，需要将前面style-loader的位置替换成MiniCssExtractPlugin.loader，还需要在插件位置进行引入配置。
+    
+    css压缩
+    下载：npm i css-minimizer-webpack-plugin -D
+    在插件位置引入并进行配置
+    
+
+                    
+    
+    
+    
+</code></pre>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/06/PKI%E5%AE%9E%E9%AA%8C%E6%AD%A5%E9%AA%A4/" rel="prev" title="PKI实验步骤">
+      <i class="fa fa-chevron-left"></i> PKI实验步骤
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/07/WebPack%E9%AB%98%E7%BA%A7%E7%9F%A5%E8%AF%86/" rel="next" title="">
+       <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81NjcyOC8zMzE5Mg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">开发模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7%E3%80%81%E5%A4%84%E7%90%86%E6%A0%B7%E5%BC%8F%E8%B5%84%E6%BA%90"><span class="nav-number">1.1.</span> <span class="nav-text">7、处理样式资源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E5%A4%84%E7%90%86CSS%E8%B5%84%E6%BA%90"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、处理CSS资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%A4%84%E7%90%86less%E8%B5%84%E6%BA%90"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、处理less资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%A4%84%E7%90%86Sass%E8%B5%84%E6%BA%90"><span class="nav-number">1.1.3.</span> <span class="nav-text">3、处理Sass资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%A4%84%E7%90%86Styl%E8%B5%84%E6%BA%90"><span class="nav-number">1.1.4.</span> <span class="nav-text">4、处理Styl资源</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8%E3%80%81%E5%A4%84%E7%90%86%E5%9B%BE%E7%89%87%E8%B5%84%E6%BA%90%EF%BC%88%E6%B2%A1%E6%88%90%E5%8A%9F%EF%BC%8C%E6%97%A0%E8%AE%BA%E6%98%AFbase64%E5%A4%84%E7%90%86%EF%BC%8C%E8%BF%98%E6%98%AF%E6%89%93%E5%8C%85%E8%B7%AF%E5%BE%84%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">8、处理图片资源（没成功，无论是base64处理，还是打包路径）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9%E3%80%81%E5%A4%84%E7%90%86%E5%AD%97%E4%BD%93%E5%9B%BE%E6%A0%87%E8%B5%84%E6%BA%90"><span class="nav-number">1.3.</span> <span class="nav-text">9、处理字体图标资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10%E3%80%81%E5%A4%84%E7%90%86%E5%85%B6%E4%BB%96%E8%B5%84%E6%BA%90"><span class="nav-number">1.4.</span> <span class="nav-text">10、处理其他资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11%E3%80%81%E5%A4%84%E7%90%86js%E8%B5%84%E6%BA%90"><span class="nav-number">1.5.</span> <span class="nav-text">11、处理js资源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81ESlint%EF%BC%88%E6%8F%92%E4%BB%B6%EF%BC%89"><span class="nav-number">1.5.1.</span> <span class="nav-text">1、ESlint（插件）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81babel"><span class="nav-number">1.5.2.</span> <span class="nav-text">2、babel</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12%E3%80%81%E5%A4%84%E7%90%86html%E8%B5%84%E6%BA%90"><span class="nav-number">1.6.</span> <span class="nav-text">12、处理html资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13%E3%80%81%E8%87%AA%E5%8A%A8%E5%8C%96"><span class="nav-number">1.7.</span> <span class="nav-text">13、自动化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%9F%E4%BA%A7%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">生产模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81CSS%E5%A4%84%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">1、CSS处理</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Amain"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Amain</p>
+  <div class="site-description" itemprop="description">生如蝼蚁当立鸿鹄之志，命如纸薄应有不屈之心</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Amain</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">9k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
