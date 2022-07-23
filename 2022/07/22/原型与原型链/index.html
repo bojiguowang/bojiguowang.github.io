@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-bounce.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="原型与原型链">
+<meta property="og:type" content="article">
+<meta property="og:title" content="原型与原型链">
+<meta property="og:url" content="http://example.com/2022/07/22/%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/index.html">
+<meta property="og:site_name" content="俾面派对">
+<meta property="og:description" content="原型与原型链">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://qianrui-xiaoyang.oss-cn-hangzhou.aliyuncs.com/img/markdownpad/%E6%98%BE%E5%BC%8F%E5%8E%9F%E5%9E%8B%E4%B8%8E%E9%9A%90%E5%BC%8F%E5%8E%9F%E5%9E%8B.png">
+<meta property="og:image" content="https://qianrui-xiaoyang.oss-cn-hangzhou.aliyuncs.com/img/markdownpad/%E5%8E%9F%E5%9E%8B%E9%93%BE.png">
+<meta property="article:published_time" content="2022-07-22T11:22:55.000Z">
+<meta property="article:modified_time" content="2022-07-23T02:20:22.353Z">
+<meta property="article:author" content="Amain">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="js">
+<meta property="article:tag" content="原型与原型链">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qianrui-xiaoyang.oss-cn-hangzhou.aliyuncs.com/img/markdownpad/%E6%98%BE%E5%BC%8F%E5%8E%9F%E5%9E%8B%E4%B8%8E%E9%9A%90%E5%BC%8F%E5%8E%9F%E5%9E%8B.png">
+
+<link rel="canonical" href="http://example.com/2022/07/22/%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>原型与原型链 | 俾面派对</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">俾面派对</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/22/%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Amain">
+      <meta itemprop="description" content="生如蝼蚁当立鸿鹄之志，命如纸薄应有不屈之心">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="俾面派对">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          原型与原型链
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-22 19:22:55" itemprop="dateCreated datePublished" datetime="2022-07-22T19:22:55+08:00">2022-07-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-23 10:20:22" itemprop="dateModified" datetime="2022-07-23T10:20:22+08:00">2022-07-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86/" itemprop="url" rel="index"><span itemprop="name">前端知识</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86/%E7%90%86%E8%AE%BA/" itemprop="url" rel="index"><span itemprop="name">理论</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+            <div class="post-description">原型与原型链</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1、每个函数都有一个prototype属性，默认指向一个Object空对象，就是原型对象"><a href="#1、每个函数都有一个prototype属性，默认指向一个Object空对象，就是原型对象" class="headerlink" title="1、每个函数都有一个prototype属性，默认指向一个Object空对象，就是原型对象"></a>1、每个函数都有一个prototype属性，默认指向一个Object空对象，就是原型对象</h2><pre><code>    function Fn() &#123;&#125;
+</code></pre>
+<h2 id="2、通过Fn-prorotype-test-x3D-function-添加原型对象上的属性"><a href="#2、通过Fn-prorotype-test-x3D-function-添加原型对象上的属性" class="headerlink" title="2、通过Fn.prorotype.test &#x3D; function() {}添加原型对象上的属性"></a>2、通过Fn.prorotype.test &#x3D; function() {}添加原型对象上的属性</h2><h2 id="3、原型对象中的属性constructor属性指向函数对象"><a href="#3、原型对象中的属性constructor属性指向函数对象" class="headerlink" title="3、原型对象中的属性constructor属性指向函数对象"></a>3、原型对象中的属性constructor属性指向函数对象</h2><pre><code>    Fn.prorotype.constructor === Fn    为true
+</code></pre>
+<h2 id="4、显式原型属性与隐式原型属性"><a href="#4、显式原型属性与隐式原型属性" class="headerlink" title="4、显式原型属性与隐式原型属性"></a>4、显式原型属性与隐式原型属性</h2><pre><code>    每个函数都有个prototype属性称为显示原型属性,显示原型属性在定义函数时自动添加的
+    每个实例对象上都有个__proto__属性称为隐式原型属性，隐式原型属性在创建实例对象时自动添加的 
+    程序员能操作显式原型，但不能操作隐式原型
+    并且对象的隐式原型的值为其对应的构造函数的显式原型的值
+    var fn = new Fn()
+    console.log(fn.__proto__  === Fn.prorotype )结果为true
+</code></pre>
+<h2 id="5、显式原型与隐式原型是引用变量，保存的是地址值，都指向原型对象"><a href="#5、显式原型与隐式原型是引用变量，保存的是地址值，都指向原型对象" class="headerlink" title="5、显式原型与隐式原型是引用变量，保存的是地址值，都指向原型对象"></a>5、显式原型与隐式原型是引用变量，保存的是地址值，都指向原型对象</h2><p><img src="https://qianrui-xiaoyang.oss-cn-hangzhou.aliyuncs.com/img/markdownpad/%E6%98%BE%E5%BC%8F%E5%8E%9F%E5%9E%8B%E4%B8%8E%E9%9A%90%E5%BC%8F%E5%8E%9F%E5%9E%8B.png"></p>
+<h2 id="6、原型链（隐式原型链）"><a href="#6、原型链（隐式原型链）" class="headerlink" title="6、原型链（隐式原型链）"></a>6、原型链（隐式原型链）</h2><p><img src="https://qianrui-xiaoyang.oss-cn-hangzhou.aliyuncs.com/img/markdownpad/%E5%8E%9F%E5%9E%8B%E9%93%BE.png"></p>
+<pre><code>            function Fn() &#123;  
+               this.test1 = function () &#123;  
+                   console.log(1);  
+                &#125;  
+            &#125;  
+            Fn.prototype.test2 = function () &#123;  
+                console.log(2);  
+            &#125;  
+            var fn = new Fn()    
+            fn.test1()  
+            fn.test2()
+            //  fn先找自己身上有没toString，没有，就去隐式原型身上找，隐式原型指向其原型对象，原型对象上也没有，就去原型对象的原型对象去找，
+            //	如果有，就返回，如果没有，就去object原型对象的__proto__上去找，object原型对象的__proto__属性值为null
+            console.log(fn.toString());
+            console.log(fn.test3());//返回值为undefined  
+</code></pre>
+<h4 id="（1）其中Object空对象是Object的实例对象，他的隐式原型属性指向其原型对象，所以肯定页存在一个函数Object。它的显式原型属性指向其原型对象。也就是0x345"><a href="#（1）其中Object空对象是Object的实例对象，他的隐式原型属性指向其原型对象，所以肯定页存在一个函数Object。它的显式原型属性指向其原型对象。也就是0x345" class="headerlink" title="（1）其中Object空对象是Object的实例对象，他的隐式原型属性指向其原型对象，所以肯定页存在一个函数Object。它的显式原型属性指向其原型对象。也就是0x345."></a>（1）其中Object空对象是Object的实例对象，他的隐式原型属性指向其原型对象，所以肯定页存在一个函数Object。它的显式原型属性指向其原型对象。也就是0x345.</h4><h4 id="（2）原型链就是循着隐式原型链一直找。不看显示原型链，所以原型链又称为隐式原型链"><a href="#（2）原型链就是循着隐式原型链一直找。不看显示原型链，所以原型链又称为隐式原型链" class="headerlink" title="（2）原型链就是循着隐式原型链一直找。不看显示原型链，所以原型链又称为隐式原型链"></a>（2）原型链就是循着隐式原型链一直找。不看显示原型链，所以原型链又称为隐式原型链</h4><p>####（3）原型链的作用就是查找对象的属性（方法）。查找变量看作用域链</p>
+<h2 id="7、Function（了解）"><a href="#7、Function（了解）" class="headerlink" title="7、Function（了解）"></a>7、Function（了解）</h2><h4 id="（1）每个构造函数的隐式原型对象都是一样的，都等于Function的显式原型对象"><a href="#（1）每个构造函数的隐式原型对象都是一样的，都等于Function的显式原型对象" class="headerlink" title="（1）每个构造函数的隐式原型对象都是一样的，都等于Function的显式原型对象"></a>（1）每个构造函数的隐式原型对象都是一样的，都等于Function的显式原型对象</h4><pre><code>    var Fn1 = new Function()
+    function Fn2() &#123;
+    &#125;
+    console.log(Fn1.__proto__ === Fn2.__proto__);
+    console.log(Fn2.__proto__ === Function.prototype);
+    console.log(Fn1.__proto__ === Function.prototype);//结果都为true
+</code></pre>
+<h4 id="（2）Function这个构造函数是从自己new出来的，也就是var-Function-x3D-new-Functio。所以Function的隐式原型等于Function的显式原型，Function显式原型的constructor指向Function。"><a href="#（2）Function这个构造函数是从自己new出来的，也就是var-Function-x3D-new-Functio。所以Function的隐式原型等于Function的显式原型，Function显式原型的constructor指向Function。" class="headerlink" title="（2）Function这个构造函数是从自己new出来的，也就是var Function &#x3D; new Functio。所以Function的隐式原型等于Function的显式原型，Function显式原型的constructor指向Function。"></a>（2）Function这个构造函数是从自己new出来的，也就是var Function &#x3D; new Functio。所以Function的隐式原型等于Function的显式原型，Function显式原型的constructor指向Function。</h4>
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Amain
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2022/07/22/%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/" title="原型与原型链">http://example.com/2022/07/22/原型与原型链/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+              <a href="/tags/js/" rel="tag"># js</a>
+              <a href="/tags/%E5%8E%9F%E5%9E%8B%E4%B8%8E%E5%8E%9F%E5%9E%8B%E9%93%BE/" rel="tag"># 原型与原型链</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/18/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="prev" title="微信小程序">
+      <i class="fa fa-chevron-left"></i> 微信小程序
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81NjcyOC8zMzE5Mg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E6%AF%8F%E4%B8%AA%E5%87%BD%E6%95%B0%E9%83%BD%E6%9C%89%E4%B8%80%E4%B8%AAprototype%E5%B1%9E%E6%80%A7%EF%BC%8C%E9%BB%98%E8%AE%A4%E6%8C%87%E5%90%91%E4%B8%80%E4%B8%AAObject%E7%A9%BA%E5%AF%B9%E8%B1%A1%EF%BC%8C%E5%B0%B1%E6%98%AF%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.</span> <span class="nav-text">1、每个函数都有一个prototype属性，默认指向一个Object空对象，就是原型对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81%E9%80%9A%E8%BF%87Fn-prorotype-test-x3D-function-%E6%B7%BB%E5%8A%A0%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1%E4%B8%8A%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">2、通过Fn.prorotype.test &#x3D; function() {}添加原型对象上的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1%E4%B8%AD%E7%9A%84%E5%B1%9E%E6%80%A7constructor%E5%B1%9E%E6%80%A7%E6%8C%87%E5%90%91%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.</span> <span class="nav-text">3、原型对象中的属性constructor属性指向函数对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81%E6%98%BE%E5%BC%8F%E5%8E%9F%E5%9E%8B%E5%B1%9E%E6%80%A7%E4%B8%8E%E9%9A%90%E5%BC%8F%E5%8E%9F%E5%9E%8B%E5%B1%9E%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text">4、显式原型属性与隐式原型属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5%E3%80%81%E6%98%BE%E5%BC%8F%E5%8E%9F%E5%9E%8B%E4%B8%8E%E9%9A%90%E5%BC%8F%E5%8E%9F%E5%9E%8B%E6%98%AF%E5%BC%95%E7%94%A8%E5%8F%98%E9%87%8F%EF%BC%8C%E4%BF%9D%E5%AD%98%E7%9A%84%E6%98%AF%E5%9C%B0%E5%9D%80%E5%80%BC%EF%BC%8C%E9%83%BD%E6%8C%87%E5%90%91%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1"><span class="nav-number">5.</span> <span class="nav-text">5、显式原型与隐式原型是引用变量，保存的是地址值，都指向原型对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6%E3%80%81%E5%8E%9F%E5%9E%8B%E9%93%BE%EF%BC%88%E9%9A%90%E5%BC%8F%E5%8E%9F%E5%9E%8B%E9%93%BE%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">6、原型链（隐式原型链）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E5%85%B6%E4%B8%ADObject%E7%A9%BA%E5%AF%B9%E8%B1%A1%E6%98%AFObject%E7%9A%84%E5%AE%9E%E4%BE%8B%E5%AF%B9%E8%B1%A1%EF%BC%8C%E4%BB%96%E7%9A%84%E9%9A%90%E5%BC%8F%E5%8E%9F%E5%9E%8B%E5%B1%9E%E6%80%A7%E6%8C%87%E5%90%91%E5%85%B6%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1%EF%BC%8C%E6%89%80%E4%BB%A5%E8%82%AF%E5%AE%9A%E9%A1%B5%E5%AD%98%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0Object%E3%80%82%E5%AE%83%E7%9A%84%E6%98%BE%E5%BC%8F%E5%8E%9F%E5%9E%8B%E5%B1%9E%E6%80%A7%E6%8C%87%E5%90%91%E5%85%B6%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1%E3%80%82%E4%B9%9F%E5%B0%B1%E6%98%AF0x345"><span class="nav-number">6.0.1.</span> <span class="nav-text">（1）其中Object空对象是Object的实例对象，他的隐式原型属性指向其原型对象，所以肯定页存在一个函数Object。它的显式原型属性指向其原型对象。也就是0x345.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%8E%9F%E5%9E%8B%E9%93%BE%E5%B0%B1%E6%98%AF%E5%BE%AA%E7%9D%80%E9%9A%90%E5%BC%8F%E5%8E%9F%E5%9E%8B%E9%93%BE%E4%B8%80%E7%9B%B4%E6%89%BE%E3%80%82%E4%B8%8D%E7%9C%8B%E6%98%BE%E7%A4%BA%E5%8E%9F%E5%9E%8B%E9%93%BE%EF%BC%8C%E6%89%80%E4%BB%A5%E5%8E%9F%E5%9E%8B%E9%93%BE%E5%8F%88%E7%A7%B0%E4%B8%BA%E9%9A%90%E5%BC%8F%E5%8E%9F%E5%9E%8B%E9%93%BE"><span class="nav-number">6.0.2.</span> <span class="nav-text">（2）原型链就是循着隐式原型链一直找。不看显示原型链，所以原型链又称为隐式原型链</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7%E3%80%81Function%EF%BC%88%E4%BA%86%E8%A7%A3%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">7、Function（了解）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E6%AF%8F%E4%B8%AA%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E9%9A%90%E5%BC%8F%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1%E9%83%BD%E6%98%AF%E4%B8%80%E6%A0%B7%E7%9A%84%EF%BC%8C%E9%83%BD%E7%AD%89%E4%BA%8EFunction%E7%9A%84%E6%98%BE%E5%BC%8F%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1"><span class="nav-number">7.0.1.</span> <span class="nav-text">（1）每个构造函数的隐式原型对象都是一样的，都等于Function的显式原型对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%882%EF%BC%89Function%E8%BF%99%E4%B8%AA%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%98%AF%E4%BB%8E%E8%87%AA%E5%B7%B1new%E5%87%BA%E6%9D%A5%E7%9A%84%EF%BC%8C%E4%B9%9F%E5%B0%B1%E6%98%AFvar-Function-x3D-new-Functio%E3%80%82%E6%89%80%E4%BB%A5Function%E7%9A%84%E9%9A%90%E5%BC%8F%E5%8E%9F%E5%9E%8B%E7%AD%89%E4%BA%8EFunction%E7%9A%84%E6%98%BE%E5%BC%8F%E5%8E%9F%E5%9E%8B%EF%BC%8CFunction%E6%98%BE%E5%BC%8F%E5%8E%9F%E5%9E%8B%E7%9A%84constructor%E6%8C%87%E5%90%91Function%E3%80%82"><span class="nav-number">7.0.2.</span> <span class="nav-text">（2）Function这个构造函数是从自己new出来的，也就是var Function &#x3D; new Functio。所以Function的隐式原型等于Function的显式原型，Function显式原型的constructor指向Function。</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Amain"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Amain</p>
+  <div class="site-description" itemprop="description">生如蝼蚁当立鸿鹄之志，命如纸薄应有不屈之心</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Amain</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">16k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">15 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+</body>
+</html>
